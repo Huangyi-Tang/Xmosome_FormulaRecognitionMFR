@@ -3,5 +3,7 @@ transformers==4.46.3
 coremltools==8.1
 onnx
 onnxruntime
-numpy
+# coremltools 8.x Torch frontend crashes on numpy>=2.4 during int() casts
+# (TypeError: only 0-dimensional arrays can be converted to Python scalars).
+numpy>=1.26,<2.4
 pillow
