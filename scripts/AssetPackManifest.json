@@ -1,0 +1,15 @@
+{
+	"assetPackID": "FormulaRecognitionMFR",
+	"downloadPolicy": {
+		"onDemand": {}
+	},
+	"fileSelectors": [
+		{
+			"directory": "FormulaRecognitionMFR"
+		}
+	],
+	"platforms": [
+		"iOS",
+		"macOS"
+	]
+}

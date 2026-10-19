@@ -1,0 +1,7 @@
+torch==2.5.1
+transformers==4.46.3
+coremltools==8.1
+onnx
+onnxruntime
+numpy
+pillow

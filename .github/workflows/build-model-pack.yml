@@ -1,0 +1,44 @@
+name: Build and Release Model Pack
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: macos-14
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          # Do not enable pip cache here: setup-python fails the job when the
+          # dependency file glob does not match (e.g. old tags without requirements.txt).
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+
+      - name: Build Model Pack
+        run: |
+          ./scripts/build-pack.sh /tmp/mfr_build
+          mkdir -p release_artifacts
+          cp /tmp/mfr_build/out/FormulaRecognitionMFR.zip release_artifacts/
+          cp /tmp/mfr_build/out/FormulaRecognitionMFR.zip.sha256 release_artifacts/
+          # Background Assets archive is optional if ba-package is unavailable.
+          if [[ -f /tmp/mfr_build/out/FormulaRecognitionMFR.aar ]]; then
+            cp /tmp/mfr_build/out/FormulaRecognitionMFR.aar release_artifacts/
+          fi
+
+      - name: Create Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: release_artifacts/*
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

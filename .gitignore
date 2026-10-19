@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+
+# Temporary / intermediate build artifacts
+/tmp/
+out/
+work/
+build/
+*.onnx
+*.mlpackage/
+*.mlmodelc/
+
+# Large model packages (should be published to GitHub Releases or App Store Connect)
+*.aar
+*.zip
+!/scripts/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
